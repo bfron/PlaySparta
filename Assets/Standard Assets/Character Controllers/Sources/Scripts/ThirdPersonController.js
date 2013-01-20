@@ -142,6 +142,12 @@ function UpdateSmoothedMovementDirection ()
 	// Right vector relative to the camera
 	// Always orthogonal to the forward vector
 	var right = Vector3(forward.z, 0, -forward.x);
+	
+	if(attackPlay == true)
+	{
+		print("때리고 있잖아!");
+		return;
+	}
 
 	var v = Input.GetAxisRaw("Vertical"); // 위쪽 화살표키를 누르면 1, 아래쪽 화살표키를 누르면 -1이 됨.
 	var h = Input.GetAxisRaw("Horizontal"); // 오른쪽 화살표키를 누르면 1, 왼쪽 화살표키를 누르면 -1이 됨.
@@ -339,7 +345,8 @@ function Update() {
 	
 	// Move the controller
 	var controller : CharacterController = GetComponent(CharacterController);
-	collisionFlags = controller.Move(movement);
+	if(attackPlay == false) // 공격중에는 움직이지 않도록 한다.
+		collisionFlags = controller.Move(movement);
 	
 	// ANIMATION sector
 	if(_animation) {
